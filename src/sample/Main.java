@@ -16,7 +16,7 @@ public class Main extends Application {
         primaryStage.show();
     }
 
-
+    //Testin giti
     public static void main(String[] args) {
         launch(args);
     }
