@@ -1,21 +1,17 @@
-package sample;
+package org.svgapp.view;
 
-import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.TilePane;
-import javafx.scene.layout.VBox;
-import javafx.stage.Stage;
 
-public class Main extends Application {
-
-    @Override
-    public void start(Stage primaryStage) throws Exception{
+/**
+ * Created by jyri on 10/10/16.
+ */
+public class ViewSVG {
+    public static Scene getPrimaryScene() {
         Node center = null;
         Node right = null;
         Node bottom = null;
@@ -33,7 +29,7 @@ public class Main extends Application {
         top.getChildren().addAll(menuBar);
 
         // Tooltipid tööriistanuppudele
-        Tooltip selectTooltip = new Tooltip("Select tool läbu");
+        Tooltip selectTooltip = new Tooltip("Select tool");
         Tooltip rectTooltip = new Tooltip("Rectangle tool");
         Tooltip ovalTooltip = new Tooltip("Oval tool");
         Tooltip zoomTooltip = new Tooltip("Zoom tool");
@@ -62,12 +58,8 @@ public class Main extends Application {
 
         BorderPane root = new BorderPane(center, top, right, bottom, left);
 
-        primaryStage.setTitle("SVGapp | Rakendus SVG vormingus graafika loomiseks");
-        primaryStage.setScene(new Scene(root, 1000, 700));
-        primaryStage.show();
-    }
+        Scene scene = new Scene(root, 1000, 700);
 
-    public static void main(String[] args) {
-        launch(args);
+        return scene;
     }
 }
