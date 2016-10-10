@@ -19,7 +19,7 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws Exception{
 
         primaryStage.setTitle("SVGapp | Rakendus SVG vormingus graafika loomiseks");
-        primaryStage.setScene(ViewSVG.getPrimaryScene());
+        primaryStage.setScene(ViewSVG.getPrimaryScene(1000, 700));
         primaryStage.show();
     }
 

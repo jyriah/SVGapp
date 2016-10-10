@@ -1,17 +1,21 @@
 package org.svgapp.view;
 
 import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.TilePane;
+import javafx.scene.layout.VBox;
 
 /**
- * Created by jyri on 10/10/16.
+ * Klass, mis annab Stage klassile sisendiks õige Scene objekti
  */
 public class ViewSVG {
-    public static Scene getPrimaryScene() {
+
+    // Staatiline meetod, mis genereerib peamisele aknale Scene objekti
+    public static Scene getPrimaryScene(int width, int height) {
         Node center = null;
         Node right = null;
         Node bottom = null;
@@ -58,8 +62,25 @@ public class ViewSVG {
 
         BorderPane root = new BorderPane(center, top, right, bottom, left);
 
-        Scene scene = new Scene(root, 1000, 700);
+        Scene scene = new Scene(root, width, height);
+        scene.getStylesheets().addAll("custom.css");
 
         return scene;
     }
+
+    // Meetod, mis genereerib Scene objekti RectTooli poolt väljakutsutud modaalaknale
+    // Hetkel ei tee see meetod midagi
+    public static Scene getRectModalScene() {
+        Parent modalRoot = null;
+        return new Scene(modalRoot);
+    }
+
+    // Meetod, mis genereerib Scene objekti RectTooli poolt väljakutsutud modaalaknale
+    // Hetkel ei tee see meetod midagi
+    public static Scene getOvalModalScene() {
+        Parent modalRoot = null;
+        return new Scene(null);
+    }
+
+
 }
