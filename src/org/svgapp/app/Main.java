@@ -11,15 +11,19 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.TilePane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import org.svgapp.view.ViewSVG;
+import org.svgapp.view.SVGMainView;
 
 public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception{
+        SVGMainView svgMainView = new SVGMainView();
+
+        Scene scene = new Scene(svgMainView, 1000, 700);
+        scene.getStylesheets().addAll("custom.css");
 
         primaryStage.setTitle("SVGapp | Rakendus SVG vormingus graafika loomiseks");
-        primaryStage.setScene(ViewSVG.getPrimaryScene(1000, 700));
+        primaryStage.setScene(scene);
         primaryStage.show();
     }
 
