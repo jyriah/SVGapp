@@ -10,21 +10,33 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.TilePane;
 import javafx.scene.layout.VBox;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
-import org.svgapp.view.SVGMainView;
+import org.svgapp.view.MainView;
+import org.svgapp.view.ShapeView;
 
 public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception{
-        SVGMainView svgMainView = new SVGMainView();
+        MainView svgMainView = new MainView();
 
         Scene scene = new Scene(svgMainView, 1000, 700);
         scene.getStylesheets().addAll("custom.css");
 
-        primaryStage.setTitle("SVGapp | Rakendus SVG vormingus graafika loomiseks");
+        primaryStage.setTitle("SVGapp :: Rakendus SVG vormingus graafika loomiseks");
         primaryStage.setScene(scene);
         primaryStage.show();
+
+        Stage modalStage = new Stage();
+
+        ShapeView shapeView = new ShapeView();
+
+        Scene modalScene = new Scene(shapeView);
+        modalStage.setScene(modalScene);
+        modalStage.initOwner(primaryStage);
+        modalStage.initModality(Modality.APPLICATION_MODAL);
+        modalStage.show();
     }
 
     public static void main(String[] args) {

@@ -3,22 +3,22 @@ package org.svgapp.view;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.canvas.Canvas;
 import javafx.scene.control.*;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.TilePane;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
+import javafx.scene.shape.Rectangle;
 
 /**
  * Klass, mis laiendab BorderPane objekti (Peaaken)
  */
-public class SVGMainView  extends BorderPane {
-
-    Node center = null;
+public class MainView  extends BorderPane {
     Node right = null;
     Node bottom = null;
 
-    //Ülemine menüü
+    // Peaakna keskmine osa
+    StackPane center = new StackPane();
+
+    // Ülemine menüü
     Menu fileMenu = new Menu("File");
     Menu editMenu = new Menu("Edit");
     Menu typeMenu = new Menu("Type");
@@ -27,25 +27,21 @@ public class SVGMainView  extends BorderPane {
     // Tooltipid tööriistanuppudele
     Tooltip selectTooltip = new Tooltip("Select tool");
     Tooltip rectTooltip = new Tooltip("Rectangle tool");
-    Tooltip ovalTooltip = new Tooltip("Oval tool");
+    Tooltip ellipseTooltip = new Tooltip("Ellipse tool");
     Tooltip zoomTooltip = new Tooltip("Zoom tool");
 
     // Vasak tööriistamenüü
     ToggleButton selectTool = new ToggleButton("S");
-
-
     ToggleButton rectTool = new ToggleButton("R");
-    ToggleButton ovalTool = new ToggleButton("O");
-
+    ToggleButton ellipseTool = new ToggleButton("E");
     ToggleButton zoomTool = new ToggleButton("Z");
 
     ToggleGroup toolToggle = new ToggleGroup();
 
-
-    TilePane left = new TilePane(selectTool, rectTool, ovalTool, zoomTool);
+    TilePane left = new TilePane(selectTool, rectTool, ellipseTool, zoomTool);
 
     // Peaakna konstruktor
-    public SVGMainView() {
+    public MainView() {
         createMainView();
     }
 
@@ -58,16 +54,19 @@ public class SVGMainView  extends BorderPane {
         selectTool.setTooltip(selectTooltip);
         rectTool.setTooltip(rectTooltip);
         rectTool.setPrefSize(40, 40);
-        ovalTool.setPrefSize(40, 40);
-        ovalTool.setTooltip(ovalTooltip);
+        ellipseTool.setPrefSize(40, 40);
+        ellipseTool.setTooltip(ellipseTooltip);
         zoomTool.setPrefSize(40, 40);
         zoomTool.setTooltip(zoomTooltip);
 
 
-        toolToggle.getToggles().addAll(selectTool, rectTool, ovalTool, zoomTool);
+        toolToggle.getToggles().addAll(selectTool, rectTool, ellipseTool, zoomTool);
 
         HBox top = new HBox();
         top.getChildren().addAll(menuBar);
+
+        Rectangle rect = new Rectangle(50, 50);
+        center.getChildren().addAll(rect);
 
         this.setCenter(center);
         this.setTop(top);
@@ -75,5 +74,4 @@ public class SVGMainView  extends BorderPane {
         this.setBottom(bottom);
         this.setLeft(left);
     }
-
 }
