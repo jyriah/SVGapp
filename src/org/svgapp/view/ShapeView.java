@@ -1,17 +1,22 @@
 package org.svgapp.view;
 
 import javafx.geometry.Pos;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 
 /**
  * Created by jyri on 10/13/16.
  */
-public class ShapeView extends VBox {
+public class ShapeView extends Stage {
+    StackPane stackPane;
+
     // Kujundi laius kõrgus sildid
     Label widthLbl = new Label("Width:");
     Label heightLbl = new Label("Height:");
@@ -30,13 +35,11 @@ public class ShapeView extends VBox {
     // HBox mille sees on nupud
     HBox btnBox = new HBox();
 
-    // Konstruktor, mis kutsub välja klassi meetodi createEllipseView
-    public ShapeView() {
-        createEllipseView();
-    }
+    // VBox mille sees on kõik akna elemendid
+    VBox root = new VBox();
 
-    // Meetod, mis paneb kokku VBoxi modaalakna Scene objekti jaoks
-    public void createEllipseView() {
+    // Konstruktor, mis paigutab kõik UI-elemendid kujundi akna jaoks valmis
+    public ShapeView() {
         widthFld.setMaxWidth(60);
         heightFld.setMaxWidth(60);
         widthHeightInfo.setHgap(5);
@@ -46,13 +49,26 @@ public class ShapeView extends VBox {
         widthHeightInfo.add(widthFld, 2, 1);
         widthHeightInfo.add(heightFld, 2, 2);
 
+        okBtn.setOnAction(e -> {
+
+        });
+
+        cancelBtn.setOnAction(e -> this.close());
+
         btnBox.getChildren().addAll(okBtn, cancelBtn);
         btnBox.setSpacing(10);
         btnBox.setAlignment(Pos.TOP_CENTER);
 
-        this.getChildren().addAll(widthHeightInfo, btnBox);
+        root.getChildren().addAll(widthHeightInfo, btnBox);
 
-        this.setSpacing(10);
+        root.setSpacing(10);
+        root.setStyle("-fx-padding: 15;");
+
+        Scene scene = new Scene(root);
+
+        this.setScene(scene);
+
+        this.setTitle("{Placeholder}");
 
     }
 }
