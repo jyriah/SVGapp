@@ -1,3 +1,107 @@
 .root {
     -fx-background-color: #999;
 }
+#toggle-select {
+    -fx-background-image: url("select.png");
+    -fx-background-color: #888;
+}
+
+#toggle-select:hover {
+    -fx-background-image: url("select.png");
+    -fx-background-color: #aaa;
+}
+
+#toggle-select:selected {
+    -fx-background-image: url("select.png");
+    -fx-background-color: #444;
+}
+
+#toggle-rectangle {
+    -fx-background-image: url("rectangle.png");
+    -fx-background-color: #888;
+}
+
+#toggle-rectangle:hover {
+    -fx-background-image: url("rectangle.png");
+    -fx-background-color: #aaa;
+}
+
+#toggle-rectangle:selected {
+    -fx-background-image: url("rectangle.png");
+    -fx-background-color: #444;
+}
+
+#toggle-rounded-rectangle {
+    -fx-background-image: url("rounded_rectangle.png");
+    -fx-background-color: #888;
+}
+
+#toggle-rounded-rectangle:hover {
+    -fx-background-image: url("rounded_rectangle.png");
+    -fx-background-color: #aaa;
+}
+
+#toggle-rounded-rectangle:selected {
+    -fx-background-image: url("rounded_rectangle.png");
+    -fx-background-color: #444;
+}
+
+#toggle-ellipse {
+    -fx-background-image: url("ellipse.png");
+    -fx-background-color: #888;
+}
+
+#toggle-ellipse:hover {
+    -fx-background-image: url("ellipse.png");
+    -fx-background-color: #aaa;
+}
+
+#toggle-ellipse:selected {
+    -fx-background-image: url("ellipse.png");
+    -fx-background-color: #444;
+}
+
+#toggle-polygon {
+    -fx-background-image: url("polygon.png");
+    -fx-background-color: #888;
+}
+
+#toggle-polygon:hover {
+    -fx-background-image: url("polygon.png");
+    -fx-background-color: #aaa;
+}
+
+#toggle-polygon:selected {
+    -fx-background-image: url("polygon.png");
+    -fx-background-color: #444;
+}
+
+#toggle-star {
+    -fx-background-image: url("star.png");
+    -fx-background-color: #888;
+}
+
+#toggle-star:hover {
+    -fx-background-image: url("star.png");
+    -fx-background-color: #aaa;
+}
+
+#toggle-star:selected {
+    -fx-background-image: url("star.png");
+    -fx-background-color: #444;
+}
+
+#toggle-zoom {
+    -fx-background-image: url("zoom.png");
+    -fx-background-color: #888;
+}
+
+#toggle-zoom:hover {
+    -fx-background-image: url("zoom.png");
+    -fx-background-color: #aaa;
+}
+
+#toggle-zoom:selected {
+    -fx-background-image: url("zoom.png");
+    -fx-background-color: #444;
+}
