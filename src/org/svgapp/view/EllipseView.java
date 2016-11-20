@@ -77,7 +77,7 @@ public class EllipseView extends Stage {
 
         this.setTitle("Ellipse");
 
-    }g
+    };
 
     public void drawEllipse(MouseEvent mouseEvent, Pane pane) {
         double radiusX = Double.parseDouble(widthFld.getText().trim());

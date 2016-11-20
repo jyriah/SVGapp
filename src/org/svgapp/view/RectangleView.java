@@ -78,11 +78,11 @@ public class RectangleView extends Stage {
     }
 
     public void drawRectangle(MouseEvent mouseEvent, Pane pane) {
-        Rectangle rect = new Rectangle(mouseEvent.getX(), mouseEvent.getY(), 100, 100);
-        rect.setWidth(Double.parseDouble(widthFld.getText().trim()));
-        rect.setHeight(Double.parseDouble(heightFld.getText().trim()));
-        pane.getChildren().add(rect);
+        double width = Double.parseDouble(widthFld.getText().trim());
+        double height = Double.parseDouble(heightFld.getText().trim());
 
+        Rectangle rect = new Rectangle(mouseEvent.getX(), mouseEvent.getY(), width, height);
+        pane.getChildren().add(rect);
     }
 }
 
