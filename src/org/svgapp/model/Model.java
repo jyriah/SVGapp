@@ -1,11 +1,11 @@
 package org.svgapp.model;
 
-/**
- * Created by jyri on 11/3/16.
- */
 public class Model {
+    // Tööriistakastist omistatud tööriistanimi
     String toolName="";
+    
 
+    // getterid setterid
     public String getToolName() {
         return toolName;
     }
