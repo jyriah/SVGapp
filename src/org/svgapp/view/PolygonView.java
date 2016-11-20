@@ -11,6 +11,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.Ellipse;
+import javafx.scene.shape.Polygon;
 import javafx.stage.Stage;
 
 public class PolygonView extends Stage {
@@ -78,13 +79,32 @@ public class PolygonView extends Stage {
     };
 
     public void drawPolygon(MouseEvent mouseEvent, Pane pane) {
-        double radiusX = Double.parseDouble(radiusFld.getText().trim());
-        double radiusY = Double.parseDouble(sidesFld.getText().trim());
+        double centerX = mouseEvent.getX();
+        double centerY = mouseEvent.getY();
+        double radius = Double.parseDouble(radiusFld.getText().trim());
+        int sides = Integer.parseInt(sidesFld.getText().trim());
 
-        Ellipse ellipse = new Ellipse(mouseEvent.getX() + radiusX,
-                mouseEvent.getY() + radiusY, radiusX, radiusY);
+        double[] radianValues = new double[sides];
+        double[] points = new double[sides*2];
 
-        pane.getChildren().add(ellipse);
+        int pointer = 0;
+
+        for (int i = 0; i < sides; i++) {
+            radianValues[i] = (Math.PI * 2/sides) * i;
+            System.out.println(radianValues[i]);
+        }
+
+        for (int i = 0; i < sides*2; i++) {
+            if(i % 2 ==0) {
+                points[i] = centerX + radius * Math.cos(radianValues[pointer]);
+            } else {
+                points[i] = centerY + radius * Math.sin(radianValues[pointer]);
+                pointer++;
+            }
+        }
+        Polygon polygon = new Polygon(points);
+
+        pane.getChildren().add(polygon);
 
     }
 }
