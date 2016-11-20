@@ -77,13 +77,16 @@ public class EllipseView extends Stage {
 
         this.setTitle("Ellipse");
 
-    }
+    }g
 
     public void drawEllipse(MouseEvent mouseEvent, Pane pane) {
-        Ellipse circle = new Ellipse(mouseEvent.getX(), mouseEvent.getY(), 100, 100);
-        circle.setRadiusX(Double.parseDouble(widthFld.getText().trim()));
-        circle.setRadiusY(Double.parseDouble(heightFld.getText().trim()));
-        pane.getChildren().add(circle);
+        double radiusX = Double.parseDouble(widthFld.getText().trim());
+        double radiusY = Double.parseDouble(heightFld.getText().trim());
+
+        Ellipse ellipse = new Ellipse(mouseEvent.getX() + radiusX,
+                mouseEvent.getY() + radiusY, radiusX, radiusY);
+
+        pane.getChildren().add(ellipse);
 
     }
 }
