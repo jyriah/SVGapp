@@ -13,20 +13,17 @@ import javafx.scene.layout.VBox;
 import javafx.scene.shape.Ellipse;
 import javafx.stage.Stage;
 
-/**
- * Created by jyri on 11/09/16.
- */
-public class EllipseView extends Stage {
+public class PolygonView extends Stage {
     MouseEvent mouseEvent;
     Pane pane;
 
     // Kujundi laius kõrgus sildid
-    Label widthLbl = new Label("Width:");
-    Label heightLbl = new Label("Height:");
+    Label radiusLbl = new Label("Radius:");
+    Label sidesLbl = new Label("Sides:");
 
-    // Tekstiväljad, milles saab kasutaja ära määrata kujundi täpse laiuse ja kõrguse
-    TextField widthFld = new TextField();
-    TextField heightFld = new TextField();
+    // Tekstiväljad, milles saab kasutaja ära määrata kujundi raadiuse
+    TextField radiusFld = new TextField();
+    TextField sidesFld = new TextField();
 
     // GridPane mille peal on sildid ja tekstiväljad
     GridPane widthHeightInfo = new GridPane();
@@ -42,21 +39,21 @@ public class EllipseView extends Stage {
     VBox root = new VBox();
 
     // Konstruktor, mis paigutab kõik UI-elemendid kujundi akna jaoks valmis
-    public EllipseView(MouseEvent mouseEvent, Pane pane) {
-        widthFld.setMaxWidth(60);
-        heightFld.setMaxWidth(60);
+    public PolygonView(MouseEvent mouseEvent, Pane pane) {
+        radiusFld.setMaxWidth(60);
+        sidesFld.setMaxWidth(60);
         widthHeightInfo.setHgap(5);
         widthHeightInfo.setVgap(5);
-        widthHeightInfo.add(widthLbl, 1, 1);
-        widthHeightInfo.add(heightLbl, 1, 2);
-        widthHeightInfo.add(widthFld, 2, 1);
-        widthHeightInfo.add(heightFld, 2, 2);
+        widthHeightInfo.add(radiusLbl, 1, 1);
+        widthHeightInfo.add(sidesLbl, 1, 2);
+        widthHeightInfo.add(radiusFld, 2, 1);
+        widthHeightInfo.add(sidesFld, 2, 2);
         this.mouseEvent = mouseEvent;
         this.pane = pane;
 
         okBtn.setDefaultButton(true);
         okBtn.setOnAction(e -> {
-            drawEllipse(mouseEvent, pane);
+            drawPolygon(mouseEvent, pane);
             this.close();
         });
 
@@ -76,13 +73,13 @@ public class EllipseView extends Stage {
 
         this.setScene(scene);
 
-        this.setTitle("Ellipse");
+        this.setTitle("Polygon");
 
     };
 
-    public void drawEllipse(MouseEvent mouseEvent, Pane pane) {
-        double radiusX = Double.parseDouble(widthFld.getText().trim());
-        double radiusY = Double.parseDouble(heightFld.getText().trim());
+    public void drawPolygon(MouseEvent mouseEvent, Pane pane) {
+        double radiusX = Double.parseDouble(radiusFld.getText().trim());
+        double radiusY = Double.parseDouble(sidesFld.getText().trim());
 
         Ellipse ellipse = new Ellipse(mouseEvent.getX() + radiusX,
                 mouseEvent.getY() + radiusY, radiusX, radiusY);
