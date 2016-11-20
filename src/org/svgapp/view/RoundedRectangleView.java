@@ -81,7 +81,7 @@ public class RoundedRectangleView extends Stage {
         this.setTitle("Rounded Rectangle");
 
     }
-
+    // kommentaar
     public void drawRoundedRectangle(MouseEvent mouseEvent, Pane pane) {
         Rectangle rect = new Rectangle(mouseEvent.getX(), mouseEvent.getY(), 100, 100);
         rect.setWidth(Double.parseDouble(widthFld.getText().trim()));
