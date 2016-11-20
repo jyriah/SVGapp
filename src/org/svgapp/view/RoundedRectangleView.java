@@ -81,13 +81,17 @@ public class RoundedRectangleView extends Stage {
         this.setTitle("Rounded Rectangle");
 
     }
-    // kommentaar
+    // Meetod lisab pane-ile ümarate nurkadega nelinurga
     public void drawRoundedRectangle(MouseEvent mouseEvent, Pane pane) {
-        Rectangle rect = new Rectangle(mouseEvent.getX(), mouseEvent.getY(), 100, 100);
-        rect.setWidth(Double.parseDouble(widthFld.getText().trim()));
-        rect.setHeight(Double.parseDouble(heightFld.getText().trim()));
-        rect.setArcHeight(Double.parseDouble(cornerFld.getText().trim()));
-        rect.setArcWidth(Double.parseDouble(cornerFld.getText().trim()));
+        double width = Double.parseDouble(widthFld.getText().trim());
+        double height = Double.parseDouble(heightFld.getText().trim());
+        double arcWidthHeight = Double.parseDouble(cornerFld.getText().trim());
+
+        Rectangle rect = new Rectangle(mouseEvent.getX(), mouseEvent.getY(), width, height);
+
+        rect.setArcHeight(arcWidthHeight);
+        rect.setArcWidth(arcWidthHeight);
+
         pane.getChildren().add(rect);
 
     }
