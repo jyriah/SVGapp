@@ -1,13 +1,7 @@
 package org.svgapp.view;
 
-import javafx.geometry.Orientation;
 import javafx.scene.control.*;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
-import javafx.scene.shape.SVGPath;
 import org.svgapp.controller.Controller;
 import org.svgapp.model.Model;
 
@@ -15,6 +9,7 @@ import org.svgapp.model.Model;
  * Klass, mis valmistab rakenduse akna jaoks kõik elemendid
  */
 public class SVGAppView extends BorderPane {
+    // Kontroller, mis suhtleb View ja Modeliga
     Controller controller = new Controller(new Model());
 
     // Rakenduse dokumendi ala, mille peal kasutaja saab luua graafikat ja muuta seda
@@ -60,15 +55,22 @@ public class SVGAppView extends BorderPane {
         // Menüüribale menüüde lisamine
         menuBar.getMenus().addAll(fileMenu, editMenu, typeMenu, helpMenu);
 
-
+        // Menüüdele menüüelementide ja actionite lisamine
         MenuItem newItem = new MenuItem("_New...");
+        newItem.setOnAction(event -> controller.fileNew());
+        
         MenuItem saveItem = new MenuItem("_Save...");
+        saveItem.setOnAction(event -> controller.fileSave());
+        
         MenuItem openItem = new MenuItem("_Open...");
-        openItem.setOnAction(event -> controller.processOpen());
+        openItem.setOnAction(event -> controller.fileOpen());
+        
         MenuItem exitItem = new MenuItem(("_Exit..."));
         exitItem.setOnAction(event -> controller.processExit());
+        
         fileMenu.getItems().addAll(newItem, saveItem, openItem, exitItem);
 
+        // Tööriistanuppudele suuruse määramine, tooltipi ja graafika lisamine. Actioni külgepanemine.
         selectTool.setPrefSize(40, 40);
         selectTool.setTooltip(selectTooltip);
         selectTool.setOnAction(event -> controller.setTool("Select"));
@@ -81,7 +83,7 @@ public class SVGAppView extends BorderPane {
 
         roundRectTool.setTooltip(roundRectTooltip);
         roundRectTool.setPrefSize(40, 40);
-        roundRectTool.setOnAction(event -> controller.setTool("RoundRectangle"));
+        roundRectTool.setOnAction(event -> controller.setTool("RoundedRectangle"));
         roundRectTool.setId("toggle-rounded-rectangle");
 
 
@@ -91,12 +93,12 @@ public class SVGAppView extends BorderPane {
         ellipseTool.setId("toggle-ellipse");
 
         polygonTool.setPrefSize(40, 40);
-        polygonTool.setTooltip(ellipseTooltip);
+        polygonTool.setTooltip(polygonTooltip);
         polygonTool.setOnAction(event -> controller.setTool("Polygon"));
         polygonTool.setId("toggle-polygon");
 
         starTool.setPrefSize(40, 40);
-        starTool.setTooltip(ellipseTooltip);
+        starTool.setTooltip(starTooltip);
         starTool.setOnAction(event -> controller.setTool("Star"));
         starTool.setId("toggle-star");
 
@@ -105,6 +107,7 @@ public class SVGAppView extends BorderPane {
         zoomTool.setOnAction(event -> controller.setTool("Zoom"));
         zoomTool.setId("toggle-zoom");
 
+        // Toggle nuppude lisamine toggle-gruppi
         toolToggle.getToggles().addAll(
                 selectTool,
                 rectTool,
@@ -114,6 +117,7 @@ public class SVGAppView extends BorderPane {
                 starTool,
                 zoomTool);
 
+        // Toggle nuppude lisamine tööriistakasti
         toolBox.getChildren().addAll(
                 selectTool,
                 rectTool,
@@ -123,11 +127,15 @@ public class SVGAppView extends BorderPane {
                 starTool,
                 zoomTool);
 
-        SVGPath svg = new SVGPath();
+        // Dokumendialale lisatud hiireklikkimise kuulamine ja kontrolleri meetodi modalOpen väljakutsumine
+        documentPane.setOnMouseClicked(event -> controller.modalOpen(event, documentPane));
+
+/*        SVGPath svg = new SVGPath();
         svg.setContent("M424.8,511.5c0,0-93.2-3-63.5,67.4c29.7,70.4,113.5,35,112.2,0S424.8,511.5,424.8,511.5z");
         svg.setFill(Color.YELLOW);
-        documentPane.getChildren().add(svg);
+        documentPane.getChildren().add(svg);*/
 
+        // SVGAppViewle dokumendiala, menüüriba ja tööriistakasti lisamine
         this.setCenter(documentPane);
         this.setTop(menuBar);
         this.setLeft(toolBox);

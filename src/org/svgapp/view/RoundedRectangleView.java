@@ -5,25 +5,27 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.*;
+import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 
 /**
- * Created by jyri on 10/13/16.
+ * Created by jyri on 11/09/16.
  */
-public class ShapeView extends Stage {
-    StackPane stackPane;
+public class RoundedRectangleView extends Stage {
+    MouseEvent mouseEvent;
+    Pane pane;
 
     // Kujundi laius kõrgus sildid
     Label widthLbl = new Label("Width:");
     Label heightLbl = new Label("Height:");
+    Label cornerLbl = new Label("Corner radius:");
 
     // Tekstiväljad, milles saab kasutaja ära määrata kujundi täpse laiuse ja kõrguse
     TextField widthFld = new TextField();
     TextField heightFld = new TextField();
+    TextField cornerFld = new TextField();
 
     // GridPane mille peal on sildid ja tekstiväljad
     GridPane widthHeightInfo = new GridPane();
@@ -39,20 +41,28 @@ public class ShapeView extends Stage {
     VBox root = new VBox();
 
     // Konstruktor, mis paigutab kõik UI-elemendid kujundi akna jaoks valmis
-    public ShapeView() {
+    public RoundedRectangleView(MouseEvent mouseEvent, Pane pane) {
         widthFld.setMaxWidth(60);
         heightFld.setMaxWidth(60);
+        cornerFld.setMaxWidth(60);
         widthHeightInfo.setHgap(5);
         widthHeightInfo.setVgap(5);
         widthHeightInfo.add(widthLbl, 1, 1);
         widthHeightInfo.add(heightLbl, 1, 2);
+        widthHeightInfo.add(cornerLbl, 1, 3);
         widthHeightInfo.add(widthFld, 2, 1);
         widthHeightInfo.add(heightFld, 2, 2);
+        widthHeightInfo.add(cornerFld, 2, 3);
+        this.mouseEvent = mouseEvent;
+        this.pane = pane;
 
+        okBtn.setDefaultButton(true);
         okBtn.setOnAction(e -> {
-
+            drawRoundedRectangle(mouseEvent, pane);
+            this.close();
         });
 
+        cancelBtn.setCancelButton(true);
         cancelBtn.setOnAction(e -> this.close());
 
         btnBox.getChildren().addAll(okBtn, cancelBtn);
@@ -68,7 +78,17 @@ public class ShapeView extends Stage {
 
         this.setScene(scene);
 
-        this.setTitle("{Placeholder}");
+        this.setTitle("Rounded Rectangle");
+
+    }
+
+    public void drawRoundedRectangle(MouseEvent mouseEvent, Pane pane) {
+        Rectangle rect = new Rectangle(mouseEvent.getX(), mouseEvent.getY(), 100, 100);
+        rect.setWidth(Double.parseDouble(widthFld.getText().trim()));
+        rect.setHeight(Double.parseDouble(heightFld.getText().trim()));
+        rect.setArcHeight(Double.parseDouble(cornerFld.getText().trim()));
+        rect.setArcWidth(Double.parseDouble(cornerFld.getText().trim()));
+        pane.getChildren().add(rect);
 
     }
 }
