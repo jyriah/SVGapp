@@ -4,10 +4,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.stage.Modality;
 import org.svgapp.model.Model;
-import org.svgapp.view.EllipseView;
-import org.svgapp.view.PolygonView;
-import org.svgapp.view.RectangleView;
-import org.svgapp.view.RoundedRectangleView;
+import org.svgapp.view.*;
 
 /**
  * Created by jyri on 11/2/16.
@@ -42,6 +39,11 @@ public class Controller {
             modalWindow.show();
         } else if(toolName.equals("Polygon")) {
             PolygonView modalWindow = new PolygonView(mouseEvent, pane);
+            modalWindow.initOwner(pane.getScene().getWindow());
+            modalWindow.initModality(Modality.APPLICATION_MODAL);
+            modalWindow.show();
+        } else if(toolName.equals("Star")) {
+            StarView modalWindow = new StarView(mouseEvent, pane);
             modalWindow.initOwner(pane.getScene().getWindow());
             modalWindow.initModality(Modality.APPLICATION_MODAL);
             modalWindow.show();
