@@ -89,6 +89,8 @@ public class EllipseView extends Stage {
 
         pane.getChildren().add(ellipse);
 
+        ellipse.setOnMouseClicked(event -> {System.out.println("Ellipse clicked!"); event.consume();});
+
     }
 }
 
