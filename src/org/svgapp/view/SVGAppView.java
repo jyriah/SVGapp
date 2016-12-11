@@ -50,6 +50,9 @@ public class SVGAppView extends BorderPane {
     // Tööriistakast, mille sees on tööriitstanupud
     TilePane toolBox = new TilePane();
 
+    // Värvide kontrollelemendi paneel
+    GridPane colorControlBox = new GridPane();
+
     // Peaakna konstruktor
     public SVGAppView() {
         // Menüüribale menüüde lisamine
@@ -130,14 +133,21 @@ public class SVGAppView extends BorderPane {
         // Dokumendialale lisatud hiireklikkimise kuulamine ja kontrolleri meetodi modalOpen väljakutsumine
         documentPane.setOnMouseClicked(event -> controller.modalOpen(event, documentPane));
 
-/*        SVGPath svg = new SVGPath();
-        svg.setContent("M424.8,511.5c0,0-93.2-3-63.5,67.4c29.7,70.4,113.5,35,112.2,0S424.8,511.5,424.8,511.5z");
-        svg.setFill(Color.YELLOW);
-        documentPane.getChildren().add(svg);*/
+        // Värvide juhtpaneeli
+        colorControlBox.setVgap(10);
 
-        // SVGAppViewle dokumendiala, menüüriba ja tööriistakasti lisamine
+        Slider redSlider = new Slider(0, 255, 125);
+        Slider greenSlider = new Slider(0, 255, 125);
+        Slider blueSlider = new Slider(0, 255, 125);
+
+        colorControlBox.addRow(1, new Label("Red"), redSlider);
+        colorControlBox.addRow(2, new Label("Green"), greenSlider);
+        colorControlBox.addRow(3, new Label("Blue"), blueSlider);
+
+        // SVGAppViewle dokumendiala, menüüriba, tööriistakasti ja kontrollelementide paneeli lisamine
         this.setCenter(documentPane);
         this.setTop(menuBar);
         this.setLeft(toolBox);
+        this.setRight(colorControlBox);
     }
 }
