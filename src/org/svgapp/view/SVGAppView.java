@@ -135,14 +135,36 @@ public class SVGAppView extends BorderPane {
 
         // Värvide juhtpaneeli
         colorControlBox.setVgap(10);
+        colorControlBox.setStyle("-fx-background-color: #888;" +
+                "-fx-border-color: #ccc;" +
+                "-fx-border-width: 2;" +
+                "-fx-padding: 10;");
 
-        Slider redSlider = new Slider(0, 255, 125);
-        Slider greenSlider = new Slider(0, 255, 125);
-        Slider blueSlider = new Slider(0, 255, 125);
+        Slider redSlider = new Slider(0, 255, 45);
+        Slider greenSlider = new Slider(0, 255, 55);
+        Slider blueSlider = new Slider(0, 255, 65);
 
-        colorControlBox.addRow(1, new Label("Red"), redSlider);
-        colorControlBox.addRow(2, new Label("Green"), greenSlider);
-        colorControlBox.addRow(3, new Label("Blue"), blueSlider);
+
+        TextField redValueTextField = new TextField(Integer.toString((int) redSlider.getValue()));
+        redValueTextField.setMaxWidth(60);
+        TextField greenValueTextField = new TextField(Integer.toString((int) greenSlider.getValue()));
+        greenValueTextField.setMaxWidth(60);
+        TextField blueValueTextField = new TextField(Integer.toString((int) blueSlider.getValue()));
+        blueValueTextField.setMaxWidth(60);
+
+
+        RadioButton fillRadioButton = new RadioButton("Fill");
+        RadioButton strokeRadioButton = new RadioButton("Stroke");
+        ToggleGroup fillStrokeGroup = new ToggleGroup();
+        fillStrokeGroup.getToggles().addAll(fillRadioButton, strokeRadioButton);
+
+
+        //fillRedValue.setOnKeyPressed();
+        colorControlBox.addRow(1, fillRadioButton, strokeRadioButton);
+        colorControlBox.add(new Label("<placeholder for fill or stroke>"), 0, 2, 3, 1);
+        colorControlBox.addRow(3, new Label("Red"), redSlider, redValueTextField);
+        colorControlBox.addRow(4, new Label("Green"), greenSlider, greenValueTextField);
+        colorControlBox.addRow(5, new Label("Blue"), blueSlider, blueValueTextField);
 
         // SVGAppViewle dokumendiala, menüüriba, tööriistakasti ja kontrollelementide paneeli lisamine
         this.setCenter(documentPane);
