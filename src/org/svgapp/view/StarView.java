@@ -12,6 +12,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.Polygon;
 import javafx.stage.Stage;
+import org.svgapp.controller.Controller;
 
 public class StarView extends Stage {
     MouseEvent mouseEvent;
@@ -41,7 +42,7 @@ public class StarView extends Stage {
     VBox root = new VBox();
 
     // Konstruktor, mis paigutab kõik UI-elemendid kujundi akna jaoks valmis
-    public StarView(MouseEvent mouseEvent, Pane pane) {
+    public StarView(MouseEvent mouseEvent, Pane pane, Controller controller) {
         radius1Fld.setMaxWidth(60);
         radius2Fld.setMaxWidth(60);
         pointsFld.setMaxWidth(60);
@@ -58,7 +59,7 @@ public class StarView extends Stage {
 
         okBtn.setDefaultButton(true);
         okBtn.setOnAction(e -> {
-            drawStar(mouseEvent, pane);
+            drawStar(mouseEvent, pane, controller);
             this.close();
         });
 
@@ -82,7 +83,7 @@ public class StarView extends Stage {
 
     };
 
-    public void drawStar(MouseEvent mouseEvent, Pane pane) {
+    public void drawStar(MouseEvent mouseEvent, Pane pane, Controller controller) {
         // Star kujundi keskkoht
         double centerX = mouseEvent.getX();
         double centerY = mouseEvent.getY();
@@ -125,6 +126,8 @@ public class StarView extends Stage {
         }
 
         Polygon polygon = new Polygon(starXYCoords);
+        //polygon.setOnMouseClicked(event -> controller);
+        polygon.setFill(controller.getCurrentFillValue());
 
         pane.getChildren().add(polygon);
 

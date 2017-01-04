@@ -9,6 +9,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
+import org.svgapp.controller.Controller;
 
 /**
  * Created by jyri on 10/13/16.
@@ -39,7 +40,7 @@ public class RectangleView extends Stage {
     private VBox root = new VBox();
 
     // Konstruktor, mis paigutab kõik UI-elemendid kujundi akna jaoks valmis
-    public RectangleView(MouseEvent mouseEvent, Pane pane) {
+    public RectangleView(MouseEvent mouseEvent, Pane pane, Controller controller) {
         widthFld.setMaxWidth(60);
         heightFld.setMaxWidth(60);
         widthHeightInfo.setHgap(5);
@@ -53,7 +54,7 @@ public class RectangleView extends Stage {
 
         okBtn.setDefaultButton(true);
         okBtn.setOnAction(e -> {
-            drawRectangle(mouseEvent, pane);
+            drawRectangle(mouseEvent, pane, controller);
             this.close();
         });
 
@@ -77,11 +78,12 @@ public class RectangleView extends Stage {
 
     }
 
-    public void drawRectangle(MouseEvent mouseEvent, Pane pane) {
+    public void drawRectangle(MouseEvent mouseEvent, Pane pane, Controller controller) {
         double width = Double.parseDouble(widthFld.getText().trim());
         double height = Double.parseDouble(heightFld.getText().trim());
 
         Rectangle rect = new Rectangle(mouseEvent.getX(), mouseEvent.getY(), width, height);
+        rect.setFill(controller.getCurrentFillValue());
         pane.getChildren().add(rect);
     }
 }

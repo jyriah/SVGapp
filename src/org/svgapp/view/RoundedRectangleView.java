@@ -9,6 +9,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
+import org.svgapp.controller.Controller;
 
 /**
  * Created by jyri on 11/09/16.
@@ -41,7 +42,7 @@ public class RoundedRectangleView extends Stage {
     VBox root = new VBox();
 
     // Konstruktor, mis paigutab kõik UI-elemendid kujundi akna jaoks valmis
-    public RoundedRectangleView(MouseEvent mouseEvent, Pane pane) {
+    public RoundedRectangleView(MouseEvent mouseEvent, Pane pane, Controller controller) {
         widthFld.setMaxWidth(60);
         heightFld.setMaxWidth(60);
         cornerFld.setMaxWidth(60);
@@ -58,7 +59,7 @@ public class RoundedRectangleView extends Stage {
 
         okBtn.setDefaultButton(true);
         okBtn.setOnAction(e -> {
-            drawRoundedRectangle(mouseEvent, pane);
+            drawRoundedRectangle(mouseEvent, pane, controller);
             this.close();
         });
 
@@ -82,7 +83,7 @@ public class RoundedRectangleView extends Stage {
 
     }
     // Meetod lisab pane-ile ümarate nurkadega nelinurga
-    public void drawRoundedRectangle(MouseEvent mouseEvent, Pane pane) {
+    public void drawRoundedRectangle(MouseEvent mouseEvent, Pane pane, Controller controller) {
         double width = Double.parseDouble(widthFld.getText().trim());
         double height = Double.parseDouble(heightFld.getText().trim());
         double arcWidthHeight = Double.parseDouble(cornerFld.getText().trim());
@@ -91,6 +92,8 @@ public class RoundedRectangleView extends Stage {
 
         rect.setArcHeight(arcWidthHeight);
         rect.setArcWidth(arcWidthHeight);
+
+        rect.setFill(controller.getCurrentFillValue());
 
         pane.getChildren().add(rect);
 

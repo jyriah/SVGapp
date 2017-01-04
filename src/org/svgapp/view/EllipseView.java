@@ -12,6 +12,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.Ellipse;
 import javafx.stage.Stage;
+import org.svgapp.controller.Controller;
 
 /**
  * Created by jyri on 11/09/16.
@@ -42,7 +43,7 @@ public class EllipseView extends Stage {
     VBox root = new VBox();
 
     // Konstruktor, mis paigutab kõik UI-elemendid kujundi akna jaoks valmis
-    public EllipseView(MouseEvent mouseEvent, Pane pane) {
+    public EllipseView(MouseEvent mouseEvent, Pane pane, Controller controller) {
         widthFld.setMaxWidth(60);
         heightFld.setMaxWidth(60);
         widthHeightInfo.setHgap(5);
@@ -56,7 +57,7 @@ public class EllipseView extends Stage {
 
         okBtn.setDefaultButton(true);
         okBtn.setOnAction(e -> {
-            drawEllipse(mouseEvent, pane);
+            drawEllipse(mouseEvent, pane, controller);
             this.close();
         });
 
@@ -80,12 +81,15 @@ public class EllipseView extends Stage {
 
     };
 
-    public void drawEllipse(MouseEvent mouseEvent, Pane pane) {
+    public void drawEllipse(MouseEvent mouseEvent, Pane pane, Controller controller) {
         double radiusX = Double.parseDouble(widthFld.getText().trim());
         double radiusY = Double.parseDouble(heightFld.getText().trim());
 
         Ellipse ellipse = new Ellipse(mouseEvent.getX() + radiusX,
                 mouseEvent.getY() + radiusY, radiusX, radiusY);
+
+        ellipse.setFill(controller.getCurrentFillValue());
+        ellipse.setStroke(controller.getCurrentStrokeValue());
 
         pane.getChildren().add(ellipse);
 

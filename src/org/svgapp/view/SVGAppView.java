@@ -1,7 +1,10 @@
 package org.svgapp.view;
 
+import javafx.beans.value.ObservableValue;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 import org.svgapp.controller.Controller;
 import org.svgapp.model.Model;
 
@@ -52,6 +55,40 @@ public class SVGAppView extends BorderPane {
 
     // Värvide kontrollelemendi paneel
     GridPane colorControlBox = new GridPane();
+
+    // Põhivärvide swatch
+    GridPane colorSwatches = new GridPane();
+
+    Slider redSlider = new Slider(0, 255, controller.getCurrentFillValue().getRed()*255);
+    Slider greenSlider = new Slider(0, 255, controller.getCurrentFillValue().getGreen()*255);
+    Slider blueSlider = new Slider(0, 255, controller.getCurrentFillValue().getBlue()*255);
+
+    Label redValueLabel;
+    Label greenValueLabel;
+    Label blueValueLabel;
+
+    Rectangle fillColor;
+    Rectangle strokeColor;
+
+    Rectangle white = new Rectangle(30, 30);
+    Rectangle gray = new Rectangle(30, 30);
+    Rectangle black = new Rectangle(30, 30);
+    Rectangle red = new Rectangle(30, 30);
+    Rectangle green = new Rectangle(30, 30);
+    Rectangle blue = new Rectangle(30, 30);
+    Rectangle warmlightred = new Rectangle(30, 30);
+    Rectangle warmlightgreen = new Rectangle(30, 30);
+    Rectangle warmlightblue = new Rectangle(30, 30);
+    Rectangle coldlightred = new Rectangle(30, 30);
+    Rectangle coldlightgreen = new Rectangle(30, 30);
+    Rectangle coldlightblue = new Rectangle(30, 30);
+
+    VBox rightPanel = new VBox();
+
+    String gridPaneStyle = "-fx-background-color: #888;" +
+            "-fx-border-color: #ccc;" +
+            "-fx-border-width: 2;" +
+            "-fx-padding: 10;";
 
     // Peaakna konstruktor
     public SVGAppView() {
@@ -131,45 +168,190 @@ public class SVGAppView extends BorderPane {
                 zoomTool);
 
         // Dokumendialale lisatud hiireklikkimise kuulamine ja kontrolleri meetodi modalOpen väljakutsumine
-        documentPane.setOnMouseClicked(event -> controller.modalOpen(event, documentPane));
+        documentPane.setOnMouseClicked(event -> controller.modalOpen(event, documentPane, controller));
 
         // Värvide juhtpaneeli
         colorControlBox.setVgap(10);
-        colorControlBox.setStyle("-fx-background-color: #888;" +
-                "-fx-border-color: #ccc;" +
-                "-fx-border-width: 2;" +
-                "-fx-padding: 10;");
-
-        Slider redSlider = new Slider(0, 255, 45);
-        Slider greenSlider = new Slider(0, 255, 55);
-        Slider blueSlider = new Slider(0, 255, 65);
+        colorControlBox.setHgap(10);
+        colorControlBox.setStyle(gridPaneStyle);
 
 
-        TextField redValueTextField = new TextField(Integer.toString((int) redSlider.getValue()));
-        redValueTextField.setMaxWidth(60);
-        TextField greenValueTextField = new TextField(Integer.toString((int) greenSlider.getValue()));
-        greenValueTextField.setMaxWidth(60);
-        TextField blueValueTextField = new TextField(Integer.toString((int) blueSlider.getValue()));
-        blueValueTextField.setMaxWidth(60);
+        redSlider.valueProperty().addListener(this::redSliderChanged);
+        greenSlider.valueProperty().addListener(this::greenSliderChanged);
+        blueSlider.valueProperty().addListener(this::blueSliderChanged);
+
+        // Punase slideri paremal pool olev silt, mis kuvab slideri positsiooni
+        redValueLabel = new Label(Integer.toString((int) redSlider.getValue()));
+        redValueLabel.setMinWidth(25);
+
+        // Rohelis slideri paremal pool olev silt, mis kuvab slideri positsiooni
+        greenValueLabel = new Label(Integer.toString((int) redSlider.getValue()));
+        greenValueLabel.setMinWidth(25);
+
+        // Sinise slideri paremal pool olev silt, mis kuvab slideri positsiooni
+        blueValueLabel = new Label(Integer.toString((int) redSlider.getValue()));
+        blueValueLabel.setMinWidth(25);
 
 
         RadioButton fillRadioButton = new RadioButton("Fill");
+        fillRadioButton.setSelected(true);
         RadioButton strokeRadioButton = new RadioButton("Stroke");
         ToggleGroup fillStrokeGroup = new ToggleGroup();
         fillStrokeGroup.getToggles().addAll(fillRadioButton, strokeRadioButton);
+        fillStrokeGroup.selectedToggleProperty().addListener(this::radioButtonChanged);
 
+        fillColor = new Rectangle(30, 30);
+        fillColor.setFill(controller.getCurrentFillValue());
+        strokeColor = new Rectangle(30, 30);
+        strokeColor.setFill(controller.getCurrentStrokeValue());
 
-        //fillRedValue.setOnKeyPressed();
-        colorControlBox.addRow(1, fillRadioButton, strokeRadioButton);
-        colorControlBox.add(new Label("<placeholder for fill or stroke>"), 0, 2, 3, 1);
-        colorControlBox.addRow(3, new Label("Red"), redSlider, redValueTextField);
-        colorControlBox.addRow(4, new Label("Green"), greenSlider, greenValueTextField);
-        colorControlBox.addRow(5, new Label("Blue"), blueSlider, blueValueTextField);
+        colorControlBox.addRow(1, fillRadioButton, fillColor);
+        colorControlBox.addRow(2, strokeRadioButton, strokeColor);
+        colorControlBox.addRow(3, new Label("Red"), redSlider, redValueLabel);
+        colorControlBox.addRow(4, new Label("Green"), greenSlider, greenValueLabel);
+        colorControlBox.addRow(5, new Label("Blue"), blueSlider, blueValueLabel);
+
+        black.setFill(Color.BLACK);
+        black.setStroke(Color.WHITE);
+
+        gray.setFill(Color.GRAY);
+        gray.setStroke(Color.WHITE);
+
+        white.setFill(Color.WHITE);
+        white.setStroke(Color.DARKGRAY);
+
+        red.setFill(Color.RED);
+        red.setStroke(Color.WHITE);
+
+        green.setFill(Color.GREEN);
+        green.setStroke(Color.WHITE);
+
+        blue.setFill(Color.BLUE);
+        blue.setStroke(Color.WHITE);
+
+        warmlightred.setFill(Color.rgb(255, 127, 0));
+        warmlightred.setStroke(Color.WHITE);
+
+        warmlightgreen.setFill(Color.rgb(127, 255, 0));
+        warmlightgreen.setStroke(Color.WHITE);
+
+        warmlightblue.setFill(Color.rgb(127, 0, 255));
+        warmlightblue.setStroke(Color.WHITE);
+
+        coldlightred.setFill(Color.rgb(255, 0, 255));
+        coldlightred.setStroke(Color.WHITE);
+
+        coldlightgreen.setFill(Color.rgb(0, 255, 127));
+        coldlightgreen.setStroke(Color.WHITE);
+
+        coldlightblue.setFill(Color.rgb(0, 127, 255));
+        coldlightblue.setStroke(Color.WHITE);
+
+        colorSwatches.setVgap(10);
+        colorSwatches.setHgap(3);
+        colorSwatches.setStyle(gridPaneStyle);
+        colorSwatches.add(new Label("Color swatches"), 0, 1, 6, 1);
+        colorSwatches.addRow(2, black, gray, white, red, green, blue);
+        colorSwatches.addRow(3, warmlightred, warmlightgreen, warmlightblue,
+                coldlightred, coldlightgreen, coldlightblue);
+
+        rightPanel.getChildren().addAll(colorControlBox, colorSwatches);
 
         // SVGAppViewle dokumendiala, menüüriba, tööriistakasti ja kontrollelementide paneeli lisamine
         this.setCenter(documentPane);
         this.setTop(menuBar);
         this.setLeft(toolBox);
-        this.setRight(colorControlBox);
+        this.setRight(rightPanel);
+    }
+
+    public void redSliderChanged(ObservableValue<? extends Number> prop, Number oldValue, Number newValue) {
+        int red = (int) redSlider.getValue();
+        redValueLabel.setText(String.valueOf(red));
+
+        if (controller.isFillSelected()) {
+            int green = (int) (controller.getCurrentFillValue().getGreen()*255);
+            int blue = (int) (controller.getCurrentFillValue().getBlue()*255);
+
+            Color color = Color.rgb(red, green, blue);
+
+            controller.setCurrentFillValue(color);
+
+            fillColor.setFill(controller.getCurrentFillValue());
+        } else {
+            int green = (int) (controller.getCurrentStrokeValue().getGreen()*255);
+            int blue = (int) (controller.getCurrentStrokeValue().getBlue()*255);
+
+            Color color = Color.rgb(red, green, blue);
+
+            controller.setCurrentStrokeValue(color);
+
+            strokeColor.setFill(controller.getCurrentStrokeValue());
+        }
+    }
+
+    public void greenSliderChanged(ObservableValue<? extends Number> prop, Number oldValue, Number newValue) {
+        int green = (int) greenSlider.getValue();
+        greenValueLabel.setText(String.valueOf(green));
+
+        if (controller.isFillSelected()) {
+            int red = (int) (controller.getCurrentFillValue().getRed()*255);
+            int blue = (int) (controller.getCurrentFillValue().getBlue()*255);
+
+            Color color = Color.rgb(red, green, blue);
+
+            controller.setCurrentFillValue(color);
+
+            fillColor.setFill(color);
+        } else {
+            int red = (int) (controller.getCurrentStrokeValue().getRed()*255);
+            int blue = (int) (controller.getCurrentStrokeValue().getBlue()*255);
+
+            Color color = Color.rgb(red, green, blue);
+
+            controller.setCurrentStrokeValue(color);
+
+            strokeColor.setFill(controller.getCurrentStrokeValue());
+        }
+    }
+
+    public void blueSliderChanged(ObservableValue<? extends Number> prop, Number oldValue, Number newValue) {
+        int blue = (int) blueSlider.getValue();
+        blueValueLabel.setText(String.valueOf(blue));
+
+        if (controller.isFillSelected()) {
+            int red = (int) (controller.getCurrentFillValue().getRed()*255);
+            int green = (int) (controller.getCurrentFillValue().getGreen()*255);
+            System.out.println(green);
+            Color color = Color.rgb(red, green, blue);
+
+            controller.setCurrentFillValue(color);
+
+            fillColor.setFill(color);
+        } else {
+            int red = (int) (controller.getCurrentStrokeValue().getRed()*255);
+            int green = (int) (controller.getCurrentStrokeValue().getGreen()*255);
+
+            Color color = Color.rgb(red, green, blue);
+
+            controller.setCurrentStrokeValue(color);
+
+            strokeColor.setFill(controller.getCurrentStrokeValue());
+        }
+    }
+
+    public void radioButtonChanged(ObservableValue<? extends  Toggle> observable, Toggle oldBtn, Toggle newBtn) {
+        String selectedLabel = ((Labeled)newBtn).getText();
+
+        if(selectedLabel.equals("Fill")) {
+            controller.setFillSelected(true);
+            redSlider.setValue(controller.getCurrentFillValue().getRed()*255);
+            greenSlider.setValue(controller.getCurrentFillValue().getGreen()*255);
+            blueSlider.setValue(controller.getCurrentFillValue().getBlue()*255);
+        } else {
+            controller.setFillSelected(false);
+            redSlider.setValue(controller.getCurrentStrokeValue().getRed()*255);
+            greenSlider.setValue(controller.getCurrentStrokeValue().getGreen()*255);
+            blueSlider.setValue(controller.getCurrentStrokeValue().getBlue()*255);
+        }
     }
 }

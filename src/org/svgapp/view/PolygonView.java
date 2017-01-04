@@ -13,6 +13,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.shape.Ellipse;
 import javafx.scene.shape.Polygon;
 import javafx.stage.Stage;
+import org.svgapp.controller.Controller;
 
 public class PolygonView extends Stage {
     MouseEvent mouseEvent;
@@ -40,7 +41,7 @@ public class PolygonView extends Stage {
     VBox root = new VBox();
 
     // Konstruktor, mis paigutab kõik UI-elemendid kujundi akna jaoks valmis
-    public PolygonView(MouseEvent mouseEvent, Pane pane) {
+    public PolygonView(MouseEvent mouseEvent, Pane pane, Controller controller) {
         radiusFld.setMaxWidth(60);
         sidesFld.setMaxWidth(60);
         widthHeightInfo.setHgap(5);
@@ -54,7 +55,7 @@ public class PolygonView extends Stage {
 
         okBtn.setDefaultButton(true);
         okBtn.setOnAction(e -> {
-            drawPolygon(mouseEvent, pane);
+            drawPolygon(mouseEvent, pane, controller);
             this.close();
         });
 
@@ -78,7 +79,7 @@ public class PolygonView extends Stage {
 
     };
 
-    public void drawPolygon(MouseEvent mouseEvent, Pane pane) {
+    public void drawPolygon(MouseEvent mouseEvent, Pane pane, Controller controller) {
         double centerX = mouseEvent.getX();
         double centerY = mouseEvent.getY();
         double radius = Double.parseDouble(radiusFld.getText().trim());
@@ -103,6 +104,7 @@ public class PolygonView extends Stage {
             }
         }
         Polygon polygon = new Polygon(points);
+        polygon.setFill(controller.getCurrentFillValue());
 
         pane.getChildren().add(polygon);
 
