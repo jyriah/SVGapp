@@ -1,5 +1,6 @@
 package org.svgapp.controller;
 
+import javafx.scene.control.Slider;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
@@ -92,5 +93,17 @@ public class Controller {
 
     public void setFillSelected(boolean selected) {
         model.setFillSelected(selected);
+    }
+
+    public void setFillSlider(Slider slider1, Slider slider2, Slider slider3) {
+        slider1.setValue(model.getFillColor().getRed()*255);
+        slider2.setValue(model.getFillColor().getGreen()*255);
+        slider3.setValue(model.getFillColor().getBlue()*255);
+    }
+
+    public void setStrokeSlider(Slider slider1, Slider slider2, Slider slider3) {
+        slider1.setValue(model.getStrokeColor().getRed()*255);
+        slider2.setValue(model.getStrokeColor().getGreen()*255);
+        slider3.setValue(model.getStrokeColor().getBlue()*255);
     }
 }

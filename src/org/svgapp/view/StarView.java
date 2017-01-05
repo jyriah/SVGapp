@@ -108,7 +108,6 @@ public class StarView extends Stage {
         double innerPointRadianAddition = outerPointRadian/2;
 
         double starXYCoords[] = new double[points*4];
-        System.out.println(points*4 + ", " + outerPointRadian + ", " + innerPointRadianAddition);
 
         int counter = 0;
 
@@ -128,6 +127,7 @@ public class StarView extends Stage {
         Polygon polygon = new Polygon(starXYCoords);
         //polygon.setOnMouseClicked(event -> controller);
         polygon.setFill(controller.getCurrentFillValue());
+        polygon.setStroke(controller.getCurrentStrokeValue());
 
         pane.getChildren().add(polygon);
 

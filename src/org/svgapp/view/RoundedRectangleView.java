@@ -94,6 +94,7 @@ public class RoundedRectangleView extends Stage {
         rect.setArcWidth(arcWidthHeight);
 
         rect.setFill(controller.getCurrentFillValue());
+        rect.setStroke(controller.getCurrentStrokeValue());
 
         pane.getChildren().add(rect);
 

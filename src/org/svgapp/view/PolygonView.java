@@ -92,7 +92,6 @@ public class PolygonView extends Stage {
 
         for (int i = 0; i < sides; i++) {
             radianValues[i] = (Math.PI * 2/sides) * i;
-            System.out.println(radianValues[i]);
         }
 
         for (int i = 0; i < sides*2; i++) {
@@ -105,6 +104,7 @@ public class PolygonView extends Stage {
         }
         Polygon polygon = new Polygon(points);
         polygon.setFill(controller.getCurrentFillValue());
+        polygon.setStroke(controller.getCurrentStrokeValue());
 
         pane.getChildren().add(polygon);
 

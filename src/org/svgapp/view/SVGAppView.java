@@ -213,39 +213,51 @@ public class SVGAppView extends BorderPane {
 
         black.setFill(Color.BLACK);
         black.setStroke(Color.WHITE);
+        black.setOnMouseClicked(event -> setCurrentColor((Color)black.getFill()));
 
         gray.setFill(Color.GRAY);
         gray.setStroke(Color.WHITE);
+        gray.setOnMouseClicked(event -> setCurrentColor((Color)gray.getFill()));
 
         white.setFill(Color.WHITE);
-        white.setStroke(Color.DARKGRAY);
+        white.setStroke(Color.BLACK);
+        white.setOnMouseClicked(event -> setCurrentColor((Color)white.getFill()));
 
         red.setFill(Color.RED);
         red.setStroke(Color.WHITE);
+        red.setOnMouseClicked(event -> setCurrentColor((Color)red.getFill()));
 
         green.setFill(Color.GREEN);
         green.setStroke(Color.WHITE);
+        green.setOnMouseClicked(event -> setCurrentColor((Color)green.getFill()));
 
         blue.setFill(Color.BLUE);
         blue.setStroke(Color.WHITE);
+        blue.setOnMouseClicked(event -> setCurrentColor((Color)blue.getFill()));
 
         warmlightred.setFill(Color.rgb(255, 127, 0));
         warmlightred.setStroke(Color.WHITE);
+        warmlightred.setOnMouseClicked(event -> setCurrentColor((Color)warmlightred.getFill()));
 
         warmlightgreen.setFill(Color.rgb(127, 255, 0));
         warmlightgreen.setStroke(Color.WHITE);
+        warmlightgreen.setOnMouseClicked(event -> setCurrentColor((Color)warmlightgreen.getFill()));
 
         warmlightblue.setFill(Color.rgb(127, 0, 255));
         warmlightblue.setStroke(Color.WHITE);
+        warmlightblue.setOnMouseClicked(event -> setCurrentColor((Color)warmlightblue.getFill()));
 
         coldlightred.setFill(Color.rgb(255, 0, 255));
         coldlightred.setStroke(Color.WHITE);
+        coldlightred.setOnMouseClicked(event -> setCurrentColor((Color)coldlightred.getFill()));
 
         coldlightgreen.setFill(Color.rgb(0, 255, 127));
         coldlightgreen.setStroke(Color.WHITE);
+        coldlightgreen.setOnMouseClicked(event -> setCurrentColor((Color)coldlightgreen.getFill()));
 
         coldlightblue.setFill(Color.rgb(0, 127, 255));
         coldlightblue.setStroke(Color.WHITE);
+        coldlightblue.setOnMouseClicked(event -> setCurrentColor((Color)coldlightblue.getFill()));
 
         colorSwatches.setVgap(10);
         colorSwatches.setHgap(3);
@@ -321,7 +333,6 @@ public class SVGAppView extends BorderPane {
         if (controller.isFillSelected()) {
             int red = (int) (controller.getCurrentFillValue().getRed()*255);
             int green = (int) (controller.getCurrentFillValue().getGreen()*255);
-            System.out.println(green);
             Color color = Color.rgb(red, green, blue);
 
             controller.setCurrentFillValue(color);
@@ -344,14 +355,24 @@ public class SVGAppView extends BorderPane {
 
         if(selectedLabel.equals("Fill")) {
             controller.setFillSelected(true);
-            redSlider.setValue(controller.getCurrentFillValue().getRed()*255);
-            greenSlider.setValue(controller.getCurrentFillValue().getGreen()*255);
-            blueSlider.setValue(controller.getCurrentFillValue().getBlue()*255);
+            controller.setFillSlider(redSlider, greenSlider, blueSlider);
+
         } else {
             controller.setFillSelected(false);
-            redSlider.setValue(controller.getCurrentStrokeValue().getRed()*255);
-            greenSlider.setValue(controller.getCurrentStrokeValue().getGreen()*255);
-            blueSlider.setValue(controller.getCurrentStrokeValue().getBlue()*255);
+            controller.setStrokeSlider(redSlider, greenSlider, blueSlider);
+        }
+    }
+
+    public void setCurrentColor(Color color) {
+        if(controller.isFillSelected()) {
+            controller.setCurrentFillValue(color);
+            fillColor.setFill(color);
+            controller.setFillSlider(redSlider, greenSlider, blueSlider);
+
+        } else {
+            controller.setCurrentStrokeValue(color);
+            strokeColor.setFill(color);
+            controller.setStrokeSlider(redSlider, greenSlider, blueSlider);
         }
     }
 }

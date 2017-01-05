@@ -84,6 +84,8 @@ public class RectangleView extends Stage {
 
         Rectangle rect = new Rectangle(mouseEvent.getX(), mouseEvent.getY(), width, height);
         rect.setFill(controller.getCurrentFillValue());
+        rect.setStroke(controller.getCurrentStrokeValue());
+
         pane.getChildren().add(rect);
     }
 }
