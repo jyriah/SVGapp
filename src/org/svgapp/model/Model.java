@@ -1,8 +1,9 @@
 package org.svgapp.model;
 
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Shape;
 
-import java.util.HashMap;
+import java.util.ArrayList;
 
 public class Model {
     // Tööriistakastist omistatud tööriistanimi
@@ -12,7 +13,11 @@ public class Model {
     Color fillColor;
     Color strokeColor;
 
+    // Kas on valitud fill radiobutton
     boolean fillSelected = true;
+
+    // ArrayList valitud kujunditega
+    ArrayList<Shape> shapeList = new ArrayList<>();
 
     public Model() {
         fillColor = Color.rgb(0, 0, 0);
@@ -51,5 +56,13 @@ public class Model {
 
     public boolean isFillSelected() {
         return fillSelected;
+    }
+
+    public ArrayList<Shape> getShapeList() {
+        return shapeList;
+    }
+
+    public void setShapeList(ArrayList<Shape> shapeList) {
+        this.shapeList = shapeList;
     }
 }

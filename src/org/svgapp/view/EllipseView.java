@@ -11,6 +11,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.Ellipse;
+import javafx.scene.shape.Shape;
 import javafx.stage.Stage;
 import org.svgapp.controller.Controller;
 
@@ -93,8 +94,10 @@ public class EllipseView extends Stage {
 
         pane.getChildren().add(ellipse);
 
-        ellipse.setOnMouseClicked(event -> {System.out.println("Ellipse clicked!"); event.consume();});
-
+        ellipse.setOnMousePressed(event -> controller.initStartingPoint(event));
+        ellipse.setOnMouseReleased(event -> controller.addShape((Shape)event.getSource(), event));
+        ellipse.setOnMouseDragged(event -> controller.moveShapes(event));
+        ellipse.setOnMouseClicked(event -> event.consume());
     }
 }
 

@@ -21,7 +21,7 @@ public class SVGAppView extends BorderPane {
     // Rakenduse menüüd
     Menu fileMenu = new Menu("File");
     Menu editMenu = new Menu("Edit");
-    Menu typeMenu = new Menu("Type");
+    Menu selectMenu = new Menu("Select");
     Menu helpMenu = new Menu("Help");
 
     // Menüüriba
@@ -93,7 +93,7 @@ public class SVGAppView extends BorderPane {
     // Peaakna konstruktor
     public SVGAppView() {
         // Menüüribale menüüde lisamine
-        menuBar.getMenus().addAll(fileMenu, editMenu, typeMenu, helpMenu);
+        menuBar.getMenus().addAll(fileMenu, editMenu, selectMenu, helpMenu);
 
         // Menüüdele menüüelementide ja actionite lisamine
         MenuItem newItem = new MenuItem("_New...");
@@ -109,6 +109,11 @@ public class SVGAppView extends BorderPane {
         exitItem.setOnAction(event -> controller.processExit());
         
         fileMenu.getItems().addAll(newItem, saveItem, openItem, exitItem);
+
+        MenuItem selectAll = new MenuItem("Select _all");
+        selectAll.setOnAction(event -> controller.selectAll(documentPane));
+
+        selectMenu.getItems().addAll(selectAll);
 
         // Tööriistanuppudele suuruse määramine, tooltipi ja graafika lisamine. Actioni külgepanemine.
         selectTool.setPrefSize(40, 40);
@@ -175,7 +180,7 @@ public class SVGAppView extends BorderPane {
         colorControlBox.setHgap(10);
         colorControlBox.setStyle(gridPaneStyle);
 
-
+        // Slideri väärtustele listeneri lisamine
         redSlider.valueProperty().addListener(this::redSliderChanged);
         greenSlider.valueProperty().addListener(this::greenSliderChanged);
         blueSlider.valueProperty().addListener(this::blueSliderChanged);
@@ -192,18 +197,27 @@ public class SVGAppView extends BorderPane {
         blueValueLabel = new Label(Integer.toString((int) redSlider.getValue()));
         blueValueLabel.setMinWidth(25);
 
-
+        // RadioButton, millega saab valida kujundi täite
         RadioButton fillRadioButton = new RadioButton("Fill");
         fillRadioButton.setSelected(true);
+
+        // RadioButton, millega saab valida kujundi joone
         RadioButton strokeRadioButton = new RadioButton("Stroke");
+
+        // RadioButtonite grupeerimine
         ToggleGroup fillStrokeGroup = new ToggleGroup();
         fillStrokeGroup.getToggles().addAll(fillRadioButton, strokeRadioButton);
-        fillStrokeGroup.selectedToggleProperty().addListener(this::radioButtonChanged);
+        fillStrokeGroup.selectedToggleProperty().addListener(this::radioButtonChanged); // RadidButtonite grupile
+        // listeneri lisamine
 
+        // fillColor ja strokeColor ruutude initsialiseerimine ja mudelis
+        // määratud vaikevärvide lisamine ruudu täitele programmi käivitamisfaasis
         fillColor = new Rectangle(30, 30);
         fillColor.setFill(controller.getCurrentFillValue());
         strokeColor = new Rectangle(30, 30);
         strokeColor.setFill(controller.getCurrentStrokeValue());
+
+
 
         colorControlBox.addRow(1, fillRadioButton, fillColor);
         colorControlBox.addRow(2, strokeRadioButton, strokeColor);

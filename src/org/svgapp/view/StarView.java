@@ -129,6 +129,7 @@ public class StarView extends Stage {
         polygon.setFill(controller.getCurrentFillValue());
         polygon.setStroke(controller.getCurrentStrokeValue());
 
+
         pane.getChildren().add(polygon);
 
     }

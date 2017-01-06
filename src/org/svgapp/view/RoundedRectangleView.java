@@ -8,6 +8,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.shape.Shape;
 import javafx.stage.Stage;
 import org.svgapp.controller.Controller;
 
@@ -95,6 +96,11 @@ public class RoundedRectangleView extends Stage {
 
         rect.setFill(controller.getCurrentFillValue());
         rect.setStroke(controller.getCurrentStrokeValue());
+
+        rect.setOnMousePressed(event -> controller.initStartingPoint(event));
+        rect.setOnMouseReleased(event -> controller.addShape((Shape)event.getSource(), event));
+        rect.setOnMouseDragged(event -> controller.moveShapes(event));
+        rect.setOnMouseClicked(event -> event.consume());
 
         pane.getChildren().add(rect);
 

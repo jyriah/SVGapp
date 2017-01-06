@@ -12,6 +12,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.Ellipse;
 import javafx.scene.shape.Polygon;
+import javafx.scene.shape.Shape;
 import javafx.stage.Stage;
 import org.svgapp.controller.Controller;
 
@@ -105,6 +106,11 @@ public class PolygonView extends Stage {
         Polygon polygon = new Polygon(points);
         polygon.setFill(controller.getCurrentFillValue());
         polygon.setStroke(controller.getCurrentStrokeValue());
+
+        polygon.setOnMousePressed(event -> controller.initStartingPoint(event));
+        polygon.setOnMouseReleased(event -> controller.addShape((Shape)event.getSource(), event));
+        polygon.setOnMouseDragged(event -> controller.moveShapes(event));
+        polygon.setOnMouseClicked(event -> event.consume());
 
         pane.getChildren().add(polygon);
 
