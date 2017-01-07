@@ -14,6 +14,14 @@ import javafx.scene.shape.Polygon;
 import javafx.stage.Stage;
 import org.svgapp.controller.Controller;
 
+/*
+* Klass, mis tekitab modaalakna kui kasutaja
+* on valinud tähekujundi tööriista ja klikib Pane objektil
+* documentPane SVGAppView klassis. OK nupule
+* vajutamine peale raadiuste ja nurkade arvu
+* valimimist joonistab Pane objektile tähekujundi
+* */
+
 public class StarView extends Stage {
     MouseEvent mouseEvent;
     Pane pane;

@@ -12,9 +12,14 @@ import javafx.scene.shape.Shape;
 import javafx.stage.Stage;
 import org.svgapp.controller.Controller;
 
-/**
- * Created by jyri on 10/13/16.
- */
+/*
+* Klass, mis tekitab modaalakna kui kasutaja
+* on valinud tähekujundi tööriista ja klikib Pane objektil
+* documentPane SVGAppView klassis. OK nupule
+* vajutamine peale laiuse ja kõrguse
+* valimimist joonistab Pane objektile nelinurga
+* */
+
 public class RectangleView extends Stage {
     MouseEvent mouseEvent;
     Pane pane;
